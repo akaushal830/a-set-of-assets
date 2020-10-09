@@ -1,8 +1,10 @@
 package com.hsbc.service;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,15 +29,28 @@ public class AddAssetServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		AssetBean asset = new AssetBean();
-		asset.setAssetId(Integer.parseInt(request.getParameter("assetid")));
+		asset.setAssetId(101);
 		asset.setSubcategory(request.getParameter("subcategory"));
 		asset.setCategory(request.getParameter("category"));
-		asset.setDateAdded(LocalDate.parse(request.getParameter("date")));
+		asset.setDateAdded(LocalDate.now());
 		asset.setDescription(request.getParameter("description"));
-		asset.setAvailable(Boolean.parseBoolean(request.getParameter("isavailable")));
+		asset.setAvailable(false);
 		
 		AssetDao dao = new AssetDao();
+		System.out.println(asset);
 		dao.addAsset(asset);
+//		if(count == 0)
+//		{
+//			response.setContentType("text/html");
+//			PrintWriter out = response.getWriter();
+//			out.print("<html>");
+//			out.print("<body><h1>Asset add unsuccessful</h1></body>");
+//			out.print("<a href = \"AddAsset.jsp\">Click to try again...</a>");
+//			out.print("</html>");
+//		}
+		RequestDispatcher rd = request.getRequestDispatcher("AddAsset.jsp");
+		rd.forward(request, response);
+		
 		
 	}
 

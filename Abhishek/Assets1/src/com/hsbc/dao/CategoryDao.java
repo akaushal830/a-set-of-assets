@@ -16,7 +16,8 @@ public class CategoryDao {
 	public void addCategory(CategoryBean category)
 	{
 		try {
-			PreparedStatement pstmt = conn.prepareStatement("Insert into Categories values (? , ? , ? , ? )");
+			System.out.println(category);
+			PreparedStatement pstmt = conn.prepareStatement("Insert into Category values (? , ? , ? , ? )");
 			pstmt.setString(1, category.getName());
 			pstmt.setInt(2, category.getLendingPeriod());
 			pstmt.setInt(3, category.getFine());

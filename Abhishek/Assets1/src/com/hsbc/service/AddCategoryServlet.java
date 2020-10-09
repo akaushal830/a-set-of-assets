@@ -1,6 +1,8 @@
 package com.hsbc.service;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,13 +28,16 @@ public class AddCategoryServlet extends HttpServlet {
 
 		CategoryBean category = new CategoryBean();
 		
-		category.setName(request.getParameter("category	name"));
+		category.setName(request.getParameter("categoryname"));
 		category.setLendingPeriod(Integer.parseInt(request.getParameter("lendingperiod")));
 		category.setFine(Integer.parseInt(request.getParameter("fine")));
 		category.setBanPeriod(Integer.parseInt(request.getParameter("banperiod")));
 		
 		CategoryDao dao = new CategoryDao();
+		
 		dao.addCategory(category);
+		RequestDispatcher rd = request.getRequestDispatcher("AddAsset.jsp");
+		rd.forward(request, response);
 		
 	}
 
