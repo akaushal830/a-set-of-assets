@@ -48,7 +48,7 @@ public class AddAssetServlet extends HttpServlet {
 //			out.print("<a href = \"AddAsset.jsp\">Click to try again...</a>");
 //			out.print("</html>");
 //		}
-		RequestDispatcher rd = request.getRequestDispatcher("AddAsset.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("AddNewAsset.jsp");
 		rd.forward(request, response);
 		
 		

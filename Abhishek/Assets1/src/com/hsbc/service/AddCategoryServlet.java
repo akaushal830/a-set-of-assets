@@ -36,7 +36,7 @@ public class AddCategoryServlet extends HttpServlet {
 		CategoryDao dao = new CategoryDao();
 		
 		dao.addCategory(category);
-		RequestDispatcher rd = request.getRequestDispatcher("AddAsset.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("AddNewAsset.jsp");
 		rd.forward(request, response);
 		
 	}

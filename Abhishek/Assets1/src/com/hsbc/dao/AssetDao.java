@@ -5,11 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.ws.Response;
 
 import com.hsbc.db.DBConnection;
 import com.hsbc.model.AssetBean;
+import com.hsbc.model.BorrowedAssetBean;
 
 public class AssetDao {
 
@@ -69,26 +72,23 @@ public class AssetDao {
 		}
 	}
 	
-	public void showAssets(int userId)
+	public List<BorrowedAssetBean> showBorrowedAssets(int userId)
 	{
-		
+		List<BorrowedAssetBean> assets = new ArrayList<>();
 		PreparedStatement pstmt;
 		try {
-			pstmt = conn.prepareStatement("select TransactionId, UserId, AssetId, BorrowStatus from Borrow where UserId = ?", ResultSet.TYPE_SCROLL_INSENSITIVE);
+			pstmt = conn.prepareStatement("select TransactionId, UserId, AssetId, Issue_Date, Due_Date, Borrow_Status from Borrow where UserId = ?");
 			pstmt.setInt(1, userId);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next())
 			{
-				if(rs.getString(4).equals("pending"))
-				{
-					return;
-				}
+				assets.add(new BorrowedAssetBean(rs.getInt(1) , rs.getInt(2) , rs.getInt(3) , LocalDate.parse(rs.getDate(4).toString()) , LocalDate.parse(rs.getDate(5).toString()) , rs.getString(6)));
 			}
-			rs.first();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return assets;
 		
 		
 	}

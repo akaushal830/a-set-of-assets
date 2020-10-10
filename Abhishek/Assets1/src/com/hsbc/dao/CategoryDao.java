@@ -2,19 +2,39 @@ package com.hsbc.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.hsbc.db.DBConnection;
 import com.hsbc.model.AssetBean;
 import com.hsbc.model.CategoryBean;
 
 public class CategoryDao {
-	
+
 	DBConnection connection = new DBConnection();
 	Connection conn = connection.getConnection();
-	
-	public void addCategory(CategoryBean category)
-	{
+
+	public List<String> showCategories() {
+		List<String> categories = new ArrayList<>();
+
+		PreparedStatement pstmt;
+		try {
+			pstmt = conn.prepareStatement("select Category_Name from category");
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				categories.add(rs.getString(1));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return categories;
+
+	}
+
+	public void addCategory(CategoryBean category) {
 		try {
 			System.out.println(category);
 			PreparedStatement pstmt = conn.prepareStatement("Insert into Category values (? , ? , ? , ? )");
